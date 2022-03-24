@@ -1,0 +1,51 @@
+<h2>Color warm pallete</h2>
+<div class="row">
+    <div class="col p-4" style="background-color: #C40D20;color:#fff">Red (#C40D20)</div>
+    <div class="col p-4" style="background-color: #FFCC00;color:#fff">Yellow (#FFCC00)</div>
+    <div class="col p-4" style="background-color: #00224C;color:#fff">Blue (#00224C)</div>
+    <div class="col p-4" style="background-color: #FFFFFF;">White (#FFFFFF)</div>
+    <div class="col p-4" style="background-color: #21211A;color:#fff">Black (#21211A)</div>
+</div>
+
+<form class="mt-5 mb-5" action="/blend_color" method="post">
+    <div class="form-group">
+      <label">Enter Color Code</label>
+      <input type="text" class="form-control" name="input_color_code" placeholder="#FFFFFF" required>
+    </div>
+    <div class="form-group">
+        <input type="submit" name="submit" class="btn btn-primary mt-3" value="Submit">
+    </div>
+</form>
+
+<div class="output">
+    <div class="row">
+        <% if (color_result.length > 0) { %>
+            <div class="col">
+                <% for (var item in color_result ) { %>
+                    Percentage - <%- (100 - color_result[item].diff) %>
+                    
+                    <br/>Given color 
+                    <div style="height: 50px;background-color: <%- color_result[item].orgin_color %> "></div>
+
+
+                    <br/>match color 
+                    <div style="height: 50px;background-color: <%- color_result[item].generated_color %> "></div>
+
+                    <br/>Combination
+                    <div>Red: <%- color_result[item].combo.red %></div>
+                    <div>yellow: <%- color_result[item].combo.yellow %></div>
+                    <div>blue: <%- color_result[item].combo.blue %></div>
+                    <div>white: <%- color_result[item].combo.white %></div>
+                    <div>black: <%- color_result[item].combo.black %></div>
+                <% } %>
+            </div>
+        <% }else{ %>
+            <p>Please enter the color</p>
+        <% } %>
+
+        <% if (err) { %>
+            <%- err %>
+        <% } %>
+
+    </div>
+</div>
