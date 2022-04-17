@@ -42,5 +42,6 @@ app.use(router)
 
 app.listen(port, () => {
     // runOPt()
-    console.log('yes you can browse now');
+    // http://localhost:3000/
+    console.log('yes you can browse now at http://localhost:' + port);
 })
