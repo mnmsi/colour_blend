@@ -97,7 +97,7 @@ const doCalc = () => {
     return oldColor;
 }
 
-const getClosestColor = (matchColor) => {
+const getClosestColor = (matchColor, req, res) => {
     try {
         let givenColorRGb = color(matchColor).object();
         var palette = [
@@ -115,9 +115,11 @@ const getClosestColor = (matchColor) => {
                 colors[key].count++
             }
         }
-        
+        return true;
     } catch (error) {
-        console.log("====:198:====getClosestColor:====", {error: error?.message});
+        // console.log("====:198:====getClosestColor:====", {error: error?.message});
+        // req.flash("error", `${matchColor} is not a valid color to parse and blend`);
+        // return res.redirect("/");
         return false;
     }
 
@@ -141,11 +143,14 @@ const combinationArrBuilder = (difference, color, original_color) => {
 const runOPt = (matchColor, req, res) => {
     if (counter === 0) {
         // console.log("====:112:====runOPt:====", {matchColor, counter});
-        if(!getClosestColor(matchColor)){
+        const result = getClosestColor(matchColor);
+        if(!result){
+            console.log({result});
             req.flash("error", `${matchColor} is not a valid color to parse and blend`);
+            resetVariables();
             return res.redirect("/");
         }
-        getClosestColor(matchColor)
+        // getClosestColor(matchColor);
     }else{
         /**
          * set the last stable color to temp_color variable
@@ -194,7 +199,7 @@ const runOPt = (matchColor, req, res) => {
             // console.log("====:161:====runOPt:====", {colors});
             req.flash("color_result", combinationArr[0]);
             resetVariables();
-            return res.redirect('/')
+            return res.redirect('/');
         }
         counter++
         runOPt(matchColor, req, res)
