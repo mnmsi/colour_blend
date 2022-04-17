@@ -88,35 +88,42 @@ const colorAddition = (prevColor, currentColor) => {
     return colorMath.evaluate("("+prevColor+ "+" + currentColor +") / 2").resultStr
 }
 
-const docalc = () => {
+const doCalc = () => {
     for (const key of Object.keys(colors)) {
         for (let index = 0; index < colors[key].count; index++) {
              oldColor = oldColor != '' ? colorAddition(oldColor, colors[key].code) : colors[key].code;
         }
     }
-    return oldColor
+    return oldColor;
 }
 
 const getClosestColor = (matchColor) => {
-    let givenColorRGb = color(matchColor).object();
-    var palette = [
-        color(colors['red'].code).object(),
-        color(colors['yellow'].code).object(),
-        color(colors['blue'].code).object(),
-        color(colors['white'].code).object(),
-        color(colors['black'].code).object(),
-    ];
-
-    closestColor = diff.closest(givenColorRGb, palette);
-    // console.log("====:89:====closestColor:====", closestColor);
-    for (const key of Object.keys(colors)) {
-        if (colors[key].code === color(closestColor).hex()) {
-            colors[key].count++
+    try {
+        let givenColorRGb = color(matchColor).object();
+        var palette = [
+            color(colors['red'].code).object(),
+            color(colors['yellow'].code).object(),
+            color(colors['blue'].code).object(),
+            color(colors['white'].code).object(),
+            color(colors['black'].code).object(),
+        ];
+    
+        closestColor = diff.closest(givenColorRGb, palette);
+        // console.log("====:89:====closestColor:====", closestColor);
+        for (const key of Object.keys(colors)) {
+            if (colors[key].code === color(closestColor).hex()) {
+                colors[key].count++
+            }
         }
+        
+    } catch (error) {
+        console.log("====:198:====getClosestColor:====", {error: error?.message});
+        return false;
     }
+
 }
 
-const combinationaArrBuilder = (difference, color, original_color) => {
+const combinationArrBuilder = (difference, color, original_color) => {
     return {
         'diff': difference,
         'orgin_color': original_color,
@@ -134,6 +141,10 @@ const combinationaArrBuilder = (difference, color, original_color) => {
 const runOPt = (matchColor, req, res) => {
     if (counter === 0) {
         // console.log("====:112:====runOPt:====", {matchColor, counter});
+        if(!getClosestColor(matchColor)){
+            req.flash("error", `${matchColor} is not a valid color to parse and blend`);
+            return res.redirect("/");
+        }
         getClosestColor(matchColor)
     }else{
         /**
@@ -151,8 +162,8 @@ const runOPt = (matchColor, req, res) => {
 
         // console.log(newDiffArr);
 
-        let newTempArr = [...newDiffArr]
-        let tempArrSort = newTempArr.sort((a,b) => a - b)
+        let newTempArr = [...newDiffArr];
+        let tempArrSort = newTempArr.sort((a,b) => a - b);
 
         for (let index = 0; index < tempArrSort.length; index++) {
             if ((difference - tempArrSort[index]) > 0 && (difference - tempArrSort[index]) != 0) {
@@ -171,18 +182,16 @@ const runOPt = (matchColor, req, res) => {
 
     // console.log("====:149:====runOPt:====", {matchColor, counter});
 
-    let resultColor = docalc();
+    let resultColor = doCalc();
     difference = cd.compare(matchColor, resultColor);
     // console.log("====153:====resultColor:====", {resultColor});
 
-    combinationArr.push(combinationaArrBuilder(difference, resultColor, matchColor))
+    combinationArr.push(combinationArrBuilder(difference, resultColor, matchColor))
     if (difference > 5) {
         if (counter === 20) {
             combinationArr.sort((a,b) => a.diff - b.diff);
             console.log("====:182:====Result:====", {combinationArr: combinationArr[0]});
             // console.log("====:161:====runOPt:====", {colors});
-            // combinationArr.map(item => console.log({combo: item.combo}))
-            // return combinationArr[0]
             req.flash("color_result", combinationArr[0]);
             resetVariables();
             return res.redirect('/')
@@ -190,8 +199,6 @@ const runOPt = (matchColor, req, res) => {
         counter++
         runOPt(matchColor, req, res)
     }else{
-        // console.log("====164:====difference:====", {difference});
-        // return combinationArr[0];
         req.flash("color_result", combinationArr[0]);
         resetVariables();
         return res.redirect('/');

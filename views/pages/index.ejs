@@ -24,11 +24,11 @@
                 <% for (var item in color_result ) { %>
                     Percentage - <%- (100 - color_result[item].diff) %>
                     
-                    <br/>Given color 
+                    <br/>Given color:  <%- color_result[item].orgin_color %> 
                     <div style="height: 50px;background-color: <%- color_result[item].orgin_color %> "></div>
 
 
-                    <br/>match color 
+                    <br/>match color:  <%- color_result[item].generated_color %> 
                     <div style="height: 50px;background-color: <%- color_result[item].generated_color %> "></div>
 
                     <br/>Combination
