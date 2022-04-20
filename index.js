@@ -1,11 +1,12 @@
-const express = require('express')
+const express = require('express');
 ;
-const app = express()
-const port = 3000
+const app = express();
+const port = 3000;
 
 // Controller
-const mainController = require('./controller/index')
-const coolController = require('./controller/cool')
+const mainController = require('./controller/index');
+const coolController = require('./controller/cool');
+const warmPurpleController = require('./controller/warm-purple');
 const expressLayouts = require('express-ejs-layouts');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
@@ -37,6 +38,8 @@ router.post('/blend_color', mainController.blend_color);
 router.get('/cool', coolController.loadPage);
 router.post('/cool_blend_color', coolController.blend_color);
 
+router.get('/warm-purple', warmPurpleController.loadPage);
+router.post('/warm_purple_blend_color', warmPurpleController.blend_color);
 app.use(router)
 
 

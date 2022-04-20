@@ -7,7 +7,7 @@ exports.loadPage = (req,res,next) => {
     let color_result = req.flash("color_result");
     let error_result = req.flash("error");
 
-    return res.render("pages/cool", {
+    return res.render("pages/warm-purple", {
         page_name: "dashboard",
         color_result: color_result,
         err: error_result
@@ -21,20 +21,18 @@ exports.blend_color = async (req, res, next) => {
         runOPt(input_color_code, req, res);
 
     }else{
-        return res.redirect("/");
+        return res.redirect("/warm-purple");
     }
 }
 
 let colors = {
 	"red": {
 		count: 0,
-		// code: "#650332"
-		code: "#890041"
+		code: "#C40D1E",
 	},
 	"yellow": {
 		count: 0,
-		code: "#FFCE51",
-
+		code: "#FFCC00"
 	},
 	"blue": {
 		count: 0,
@@ -47,6 +45,10 @@ let colors = {
 	"black": {
 		count: 0,
 		code: "#21211A"
+	},
+    "purple": {
+		count: 0,
+		code: "#4E3379"
 	},
 };
 
@@ -65,13 +67,11 @@ const resetVariables = () => {
     colors = {
         "red": {
             count: 0,
-            // code: "#650332"
-            code: "#890041"
+            code: "#C40D1E",
         },
         "yellow": {
             count: 0,
-            code: "#FFCE51",
-    
+            code: "#FFCC00"
         },
         "blue": {
             count: 0,
@@ -85,6 +85,10 @@ const resetVariables = () => {
             count: 0,
             code: "#21211A"
         },
+        "purple": {
+            count: 0,
+            code: "#4E3379"
+        },
     };
 }
 
@@ -97,6 +101,7 @@ const getClosestColor = (matchColor) => {
             color(colors['blue'].code).object(),
             color(colors['white'].code).object(),
             color(colors['black'].code).object(),
+            color(colors['purple'].code).object(),
         ];
         
         console.log("====line:113====", {palette});
@@ -129,6 +134,7 @@ const combinationBuilder = (difference, color, original_color) => {
             "blue": colors['blue'].count,
             "white": colors['white'].count,
             "black": colors['black'].count,
+            "purple": colors['purple'].count,
         }
     }
 }
@@ -156,7 +162,7 @@ const runOPt = (matchColor, req, res) => {
             console.log({result});
             req.flash("error", `${matchColor} is not a valid color to parse and blend`);
             resetVariables();
-            return res.redirect("/cool");
+            return res.redirect("/warm-purple");
         }else{
             targetColor = color(closestColor).hex();
             counter++;
@@ -190,7 +196,7 @@ const runOPt = (matchColor, req, res) => {
             console.log("====:201:====runOPt:====", {combination});
             req.flash("color_result", combination);
             resetVariables();
-            return res.redirect('/cool');
+            return res.redirect('/warm-purple');
         }else{
             if(color_key){
                 targetColor = targetTempColor;

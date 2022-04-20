@@ -1,13 +1,14 @@
-<h2>Color Cool pallete</h2>
+<h2>Color warm purple pallete</h2>
 <div class="row">
-    <div class="col p-4" style="background-color: #890041;color:#fff">Red-Cool (#890041)</div>
-    <div class="col p-4" style="background-color: #FFCE51;color:#fff">Yellow-Cool (#FFCE51)</div>
+    <div class="col p-4" style="background-color: #C40D1E;color:#fff">Red (#C40D1E)</div>
+    <div class="col p-4" style="background-color: #FFCC00;color:#fff">Yellow (#FFCC00)</div>
     <div class="col p-4" style="background-color: #00224C;color:#fff">Blue (#00224C)</div>
     <div class="col p-4" style="background-color: #FFFFFF;">White (#FFFFFF)</div>
     <div class="col p-4" style="background-color: #21211A;color:#fff">Black (#21211A)</div>
+    <div class="col p-4" style="background-color: #4E3379;color:#fff">Purple (#4E3379)</div>
 </div>
 
-<form class="mt-5 mb-5" action="/cool_blend_color" method="post">
+<form class="mt-5 mb-5" action="/warm_purple_blend_color" method="post">
     <div class="form-group">
       <label">Enter Color Code</label>
       <input type="text" class="form-control" name="input_color_code" placeholder="#FFFFFF" required>
@@ -37,6 +38,7 @@
                     <div>blue: <%- color_result[item].combo.blue %></div>
                     <div>white: <%- color_result[item].combo.white %></div>
                     <div>black: <%- color_result[item].combo.black %></div>
+                    <div>purple: <%- color_result[item].combo.purple %></div>
                 <% } %>
             </div>
         <% }else{ %>

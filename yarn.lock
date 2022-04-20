@@ -244,6 +244,11 @@ color-diff@^1.2.0:
   resolved "https://registry.yarnpkg.com/color-diff/-/color-diff-1.2.0.tgz#01a7c806de47dbd5ae571da49e65489666c999a7"
   integrity sha512-FN7iLBCfb97ElJU2AQXbBAFXPbKmu0XJjPU9GWWmUkIbXka+Im8Q5w1geiL9GB+AktJ4pIA6nRZD1+TlEG6/rA==
 
+color-difference-finder@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/color-difference-finder/-/color-difference-finder-0.0.1.tgz#3594efaa75ffceb62bbec6920160beac24af4e81"
+  integrity sha512-hl7EUQH+UASSAypgj5aa+8FOqWgCDyyqDpQ9bhqD2cQmbETlH9Tx4K9j4ktLdlJOUNhGMTrC2Q5s6rje6V+ICQ==
+
 color-difference@^0.3.4:
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/color-difference/-/color-difference-0.3.4.tgz#95edcbacc64e382c2969741744a6508b3f94488f"
