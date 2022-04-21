@@ -192,7 +192,7 @@ const runOPt = (matchColor, req, res) => {
             }
             
         }
-        if(!flag || counter > 20){
+        if(!flag || counter > 50){
             console.log("====:201:====runOPt:====", {combination});
             req.flash("color_result", combination);
             resetVariables();
